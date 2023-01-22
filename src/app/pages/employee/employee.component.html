@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header bg-success">
+        Employee List
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>Name</th>
+              <th>Contact</th>
+              <th>EmailId</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of gridList;let sr= index">
+              <td>{{sr+1}}</td>
+              <td>{{item.EmployeeName}}</td>
+              <td>{{item.ContactNo}}</td>
+              <td>{{item.EmailId}}</td>
+              <td>
+                <button class="btn btn-success btn-sm">Edit</button>
+                <button class="btn btn-secondary btn-sm">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header bg-success">
+        Create New
+      </div>
+      <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <label for="">Name</label>
+              <input type="text" [(ngModel)]="employeeObj.EmployeeName" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="">Contact No</label>
+              <input type="text" [(ngModel)]="employeeObj.ContactNo" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="">Email-Id</label>
+              <input type="text" [(ngModel)]="employeeObj.EmailId" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="">Role</label>
+               <select  [(ngModel)]="employeeObj.Role" id="" class="form-control">
+                <option value="">Select Role</option>
+                <option value="Employee">Employee</option>
+                <option value="AdminDept">Admin Dept</option>
+               </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="">User Name</label>
+              <input type="text" [(ngModel)]="employeeObj.UserName" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="">Password</label>
+              <input type="text" [(ngModel)]="employeeObj.Password" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label for="">Select Dept</label>
+              <select [(ngModel)]="employeeObj.DeptId" (change)="getEmployeeByDept()" id="" class="form-control">
+                <option value="">Select Dept</option>
+                <option *ngFor="let item of departmentList" [value]="item.DeptId">{{item.DeptName}}</option>
+               </select>
+            </div>
+            <div class="col-6">
+              <label for="">Select Senior</label>
+               <select [(ngModel)]="employeeObj.ReportsTo" id="" class="form-control">
+                <option value="">Select Senior</option>
+                <option *ngFor="let item of employeeList" [value]="item.EmployeeId">{{item.EmployeeName}}</option>
+               </select>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-6  text-end">
+              <button class="btn btn-secondary btn-sm">Reset</button>
+            </div>
+            <div class="col-6  text-left">
+              <button class="btn btn-success btn-sm" (click)="onSaveEmployee()">Save Employee</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

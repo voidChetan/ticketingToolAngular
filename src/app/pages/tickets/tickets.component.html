@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header bg-success">
+        Ticket List
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th *ngIf="loggedUserData.Role !=='Employee'">Employee</th>
+              <th>Request No</th>
+              <th>Dept</th>
+              <th>State</th>
+              <th>Created On</th>
+              <th> Expected By</th>
+              <th>Severity</th>
+              <th>Assigned To</th>
+              <th>Completed On</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of gridList;let sr= index">
+              <td>{{sr+1}}</td>
+              <td  *ngIf="loggedUserData.Role !=='Employee'">{{item.EmployeeName}}</td>
+              <td>{{item.RequestNo}}</td>
+              <td>{{item.DeptName}}</td>
+              <td>{{item.State}}</td>
+              <td>{{item.CreatedDate |date:'dd-MMM-yy'}}</td>
+              <td>{{item.ExpectedEndDate |date:'dd-MMM-yy'}}</td>
+              <td>{{item.Severity}}</td>
+              <td>
+                {{loggedUserData.Role}}
+                <button *ngIf="item.State == 'In-Progress'" (click)="closeRequest(item.RequestId)" class="btn btn-sm btn-success">Close</button>
+                <button *ngIf="item.State == 'Assigned' && loggedUserData.Role == 'AdminDept'" (click)="startRequest(item.RequestId)" class="btn btn-sm btn-success">Start</button>
+                <button *ngIf="item.AssignedUserName == '--' && loggedUserData.Role == 'admin'" (click)="assign(item.RequestId,item.DeptId)" class="btn btn-sm btn-success">Assign</button>
+                <span *ngIf="item.AssignedUserName != '--'">{{item.AssignedUserName}}</span>
+              </td>
+              <td>{{item.CompletedDate |date:'dd-MMM-yy' }}</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-4" *ngIf="isOpenTicket">
+    <div class="card">
+      <div class="card-header bg-success">
+        Create New
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <label for="">Select Department</label>
+            <select [(ngModel)]="ticketObj.DeptId" id="" class="form-control">
+              <option value="">Select</option>
+              <option *ngFor="let item of departmentList" [value]="item.DeptId">{{item.DeptName}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label for="">Select Priority</label>
+            <select [(ngModel)]="ticketObj.Severity" id="" class="form-control">
+              <option value="">Select</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label for="">Your Request</label>
+            <textarea  [(ngModel)]="ticketObj.RequestDetails" id="" rows="3" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-6  text-end">
+            <button class="btn btn-secondary btn-sm">Reset</button>
+          </div>
+          <div class="col-6  text-left">
+            <button class="btn btn-success btn-sm" (click)="onCreateTicket()">Create Ticket  </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4" *ngIf="isAssignTicket">
+    <div class="card">
+      <div class="card-header bg-success">
+       Assign Ticket
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <label for="">Select Employee</label>
+            <select [(ngModel)]="assignObj.AssignedTo" id="" class="form-control">
+              <option value="">Select</option>
+              <option *ngFor="let item of EmpBydepartmentList" [value]="item.EmployeeId">{{item.EmployeeName}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-6  text-end">
+            <button class="btn btn-secondary btn-sm">Reset</button>
+          </div>
+          <div class="col-6  text-left">
+            <button class="btn btn-success btn-sm" (click)="onAssignEmp()">Assign  </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
