@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MasterService } from 'src/app/core/services/master.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
   loggedUserData: any;
-  constructor() {
+  role: string = '';
+  constructor(private master: MasterService) {
     const localData =  localStorage.getItem('reqObj');
     if(localData!= null) {
       this.loggedUserData = JSON.parse(localData);
@@ -15,6 +17,9 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+  onROleChange() {
+    this.master.emitSubject(this.role);
   }
 
 }

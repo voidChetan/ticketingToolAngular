@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MasterService } from 'src/app/core/services/master.service';
 
 @Component({
   selector: 'app-tickets',
@@ -32,12 +33,23 @@ export class TicketsComponent implements OnInit {
     "RequestId": 0,
     "AssignedTo": 0
   };
-  constructor(private http:HttpClient) {
+  imgArra= [
+    'https://wallpaperaccess.com/full/1204217.jpg',
+    'https://i.pinimg.com/550x/c2/75/de/c275de7819243232fbfa5f42031cc72b.jpg',
+    'https://i.pinimg.com/originals/a4/96/c2/a496c2b6bc5d7cfe0e0674f6598c38ad.jpg'
+  ]
+  onEmpCreate(param: string) {
+    debugger;
+  }
+  constructor(private http:HttpClient, private master: MasterService) {
     const localData =  localStorage.getItem('reqObj');
     if(localData!= null) {
       this.loggedUserData = JSON.parse(localData);
       this.ticketObj.EmployeeId =  this.loggedUserData.EmployeeId;
     }
+    this.master.getSubject().subscribe(res=>{
+      debugger;
+    })
 
   }
 
@@ -72,7 +84,7 @@ export class TicketsComponent implements OnInit {
     })
   }
   getDepartments() {
-    this.http.get("https://akbarapi.funplanetresort.in/api/MyRequest/GetDepartments").subscribe((res:any)=>{
+    this.master.getDepartments().subscribe((res:any)=>{
       this.departmentList = res;
     })
   }

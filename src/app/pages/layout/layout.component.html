@@ -20,6 +20,10 @@
         </li>
       </ul>
       <form class="d-flex">
+        <select [(ngModel)]="role" name="role" (change)="onROleChange()">
+          <option value="admin">admin</option>
+          <option value="user">user</option>
+        </select>
         {{loggedUserData.UserName}}
       </form>
     </div>

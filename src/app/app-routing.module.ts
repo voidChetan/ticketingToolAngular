@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/services/auth.guard';
 import { DepartmentComponent } from './pages/department/department.component';
 import { DeptLayoutComponent } from './pages/dept-layout/dept-layout.component';
 import { EmpLayoutComponent } from './pages/emp-layout/emp-layout.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   {
     path:'',
     component:LayoutComponent,
+    canActivate: [AuthGuard],
     children:[
       {
         path:'tickets',

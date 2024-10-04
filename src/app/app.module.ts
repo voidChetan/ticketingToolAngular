@@ -13,6 +13,9 @@ import { EmpLayoutComponent } from './pages/emp-layout/emp-layout.component';
 import { DeptLayoutComponent } from './pages/dept-layout/dept-layout.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MyCarouselComponent } from './shared/widgets/my-carousel/my-carousel.component';
+import { MyButtonComponent } from './shared/widgets/my-button/my-button.component';
+import { AuthGuard } from './core/services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
     LayoutComponent,
     LoginComponent,
     EmpLayoutComponent,
-    DeptLayoutComponent
+    DeptLayoutComponent,
+    MyCarouselComponent,
+    MyButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
